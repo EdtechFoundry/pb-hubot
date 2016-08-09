@@ -80,11 +80,11 @@ nconf.defaults options
 
 module.exports = (robot) ->
 
-  robot.respond /pb[,\s]+(.*)/i, (msg) ->
+  robot.respond /([\s\S]*)/i, (msg) ->
     user = msg.message.user.name
     query = msg.match[1]
-
-    if query
+    isTrigger = /^trigger\s/i.test(query);
+    if query && !isTrigger
       param = input: query
       param.client_name = nconf.get 'client_name' if nconf.get 'client_name'
       param.sessionid = nconf.get 'sessionid'     if nconf.get 'sessionid'
